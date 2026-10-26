@@ -1080,12 +1080,79 @@ body.modal-open {
     }
 }
 
+
+/* =========================
+   HELP DESK SUBPAGE NAVIGATION
+========================= */
+.page-nav {
+    display:flex; justify-content:center; flex-wrap:wrap; gap:10px;
+    margin: 0 auto 28px;
+}
+.page-nav-btn {
+    padding:11px 20px; border-radius:10px; cursor:pointer;
+    color:#bfc7d3; background:rgba(17,25,35,.9);
+    border:1px solid rgba(157,101,217,.28); font-weight:700;
+    transition:.25s;
+}
+.page-nav-btn:hover { border-color:var(--purple); color:#fff; }
+.page-nav-btn.active {
+    color:var(--gold-light); border-color:var(--gold);
+    background:linear-gradient(135deg,rgba(212,175,55,.13),rgba(157,101,217,.09));
+    box-shadow:0 0 18px rgba(212,175,55,.10);
+}
+.changelog-page { display:none; }
+.changelog-hero {
+    padding:26px 28px; margin-bottom:22px; border-radius:15px;
+    border:1px solid rgba(212,175,55,.25);
+    background:linear-gradient(135deg,rgba(212,175,55,.08),rgba(0,143,208,.07),rgba(157,101,217,.08));
+}
+.changelog-kicker { color:var(--purple-light); font-size:11px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; }
+.changelog-hero h2 { margin:8px 0; color:var(--gold-light); font-size:28px; }
+.changelog-hero p { margin:0; color:var(--text-secondary); line-height:1.7; }
+.changelog-toolbar { display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; margin:22px 0 14px; }
+.changelog-language { display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin:20px 0 12px; padding:13px 15px; border:1px solid rgba(212,175,55,.22); border-radius:10px; background:rgba(157,101,217,.06); }
+.changelog-language label { color:var(--gold-light); font-size:13px; font-weight:700; }
+.changelog-language select { min-width:180px; padding:9px 12px; color:#fff; background:#111923; border:1px solid rgba(212,175,55,.3); border-radius:8px; font:inherit; outline:none; }
+.changelog-language select:focus { border-color:var(--gold); }
+#googleTranslateMount { display:none !important; }
+.goog-te-banner-frame, .skiptranslate { display:none !important; }
+body { top:0 !important; }
+html.translated-ltr, html.translated-rtl { margin-top:0 !important; }
+.changelog-version { color:var(--gold-light); font-size:18px; font-weight:800; }
+.changelog-count { color:var(--text-secondary); font-size:12px; }
+.changelog-search { width:100%; max-width:350px; padding:11px 14px; border-radius:9px; color:#fff; background:#111923; border:1px solid rgba(212,175,55,.25); outline:none; }
+.changelog-search:focus { border-color:var(--gold); }
+/* Landscape layout: each changelog category card spans the full content width. */
+.changelog-sections { display:grid; grid-template-columns:minmax(0, 1fr); gap:15px; }
+.changelog-section {
+    padding:20px; border:1px solid rgba(212,175,55,.18); border-radius:13px;
+    background:linear-gradient(145deg,rgba(25,33,46,.88),rgba(13,19,28,.95));
+}
+.changelog-section h3 { margin:0 0 14px; color:var(--gold-light); font-size:16px; display:flex; align-items:center; gap:9px; }
+.changelog-section h3 span { width:30px; height:30px; display:inline-flex; align-items:center; justify-content:center; border-radius:8px; background:rgba(157,101,217,.12); border:1px solid rgba(157,101,217,.25); }
+.changelog-list { list-style:none; margin:0; padding:0; display:grid; gap:9px; }
+.changelog-list li { position:relative; padding:10px 12px 10px 27px; color:#c4cedb; line-height:1.6; font-size:13px; border-left:2px solid rgba(0,143,208,.6); border-radius:4px; background:rgba(0,120,190,.045); }
+.changelog-list li::before { content:""; position:absolute; left:11px; top:18px; width:5px; height:5px; border-radius:50%; background:var(--gold); }
+.changelog-list li strong { color:var(--gold-light); }
+.changelog-note { margin-top:18px; color:#778799; font-size:12px; line-height:1.6; }
+.changelog-empty { display:none; padding:30px; text-align:center; color:var(--text-secondary); }
+@media(max-width:700px) {
+ .page-nav { margin-bottom:22px; }
+ .page-nav-btn { flex:1; padding:10px 12px; font-size:12px; }
+ .changelog-hero { padding:20px 17px; }
+ .changelog-hero h2 { font-size:23px; }
+ .changelog-sections { grid-template-columns:1fr; }
+ .changelog-section { padding:16px; }
+ .changelog-toolbar { align-items:stretch; }
+ .changelog-search { max-width:none; }
+}
+
 </style>
 </head>
 <body>
 <div class="helpdesk">
 <!-- HEADER -->
-<div class="header">
+<div class="header notranslate">
 <h1 class="helpdesk-title">
 <img alt="RGC Help Desk Logo" class="helpdesk-logo" src="https://i.imgur.com/U6kQP7Q.png"/>
 <span>RGC Help Desk</span>
@@ -1097,12 +1164,17 @@ body.modal-open {
             Ranked Gaming Client — Support Center
         </p>
 </div>
+<!-- SUBPAGE NAVIGATION -->
+<nav class="page-nav notranslate" aria-label="Help Desk pages">
+    <button class="page-nav-btn active" type="button" data-page="faq">📚 Help Desk</button>
+    <button class="page-nav-btn" type="button" data-page="changelog">🗺️ Map Changelogs 6.90</button>
+</nav>
 <!-- SEARCH -->
-<div class="search-box">
+<div class="search-box notranslate">
 <input id="searchInput" placeholder="🔍 Search your problem..." type="text"/>
 </div>
 <!-- CATEGORY -->
-<div class="categories">
+<div class="categories notranslate">
 <button class="category-btn active" data-category="all">
             All
         </button>
@@ -1120,11 +1192,11 @@ body.modal-open {
         </button>
 </div>
 <!-- FAQ -->
-<div class="section-title">
+<div class="section-title notranslate">
 <h2>Frequently Asked Questions</h2>
 <span class="result-count" id="resultCount">14 articles</span>
 </div>
-<div class="faq-grid" id="faqGrid"><div class="faq-card" data-category="warcraft" data-search="talent tree animation bug spell effects disappearing DirectX repair administrator">
+<div class="faq-grid notranslate" id="faqGrid"><div class="faq-card" data-category="warcraft" data-search="talent tree animation bug spell effects disappearing DirectX repair administrator">
 <div class="faq-header">
 <div class="faq-icon">✨</div>
 <div class="faq-question">
@@ -1655,13 +1727,151 @@ body.modal-open {
 </div>
 
 </div>
-<div class="no-results" id="noResults">
+<div class="no-results notranslate" id="noResults">
 
         No matching articles found.
 
     </div>
+<!-- MAP CHANGELOGS SUBPAGE -->
+<section class="changelog-page" id="changelogPage" aria-labelledby="changelogTitle">
+    <div class="changelog-hero">
+        <div class="changelog-kicker">RGC Map Updates</div>
+        <h2 id="changelogTitle">Map Changelogs 6.90</h2>
+        <p>Explore gameplay fixes, global changes, hero adjustments, visual updates, and other changes included in each map version.</p>
+    </div>
+    <div class="changelog-language">
+        <label for="changelogLanguage">🌐 Language / Idioma / ภาษา / 语言</label>
+        <select id="changelogLanguage" aria-label="Choose changelog language">
+            <option value="en" selected>English</option>
+            <option value="es">Español — Spanish</option>
+            <option value="th">ไทย — Thai</option>
+            <option value="zh-CN">中文 — Chinese</option>
+        </select>
+        <div id="googleTranslateMount" aria-hidden="true"></div>
+    </div>
+    <div class="changelog-toolbar">
+        <div>
+            <div class="changelog-version">v6.90a8–v6.90b2</div>
+            <div class="changelog-count" id="changelogCount">5 sections · 1 map changelog</div>
+        </div>
+        <input class="changelog-search" id="changelogSearch" type="search" placeholder="🔍 Search this changelog..." aria-label="Search map changelog">
+    </div>
+    <div class="changelog-sections" id="changelogSections">
+        <article class="changelog-section" data-changelog-section>
+            <h3><span>🛠️</span> Fixes</h3>
+            <ul class="changelog-list">
+                <li>Recoded ability charges system and now countes full cooldown reduces (before only Octarine). Fixed Refreshes not triggering and Rubick having no charges on steal</li>
+                <li>Fixed Avalanche (Tiny) waves increasing stun duration</li>
+                <li>Fixed Elune's Arrow (Mirana) and Ice Path (Jakiro) being able to cast on forced movements</li>
+                <li>Fixed Roshan no longer leaves his pit when hexed</li>
+                <li>Fixed Ghost Shroud (Necrolyte) regeneration bug</li>
+                <li>Fixed Smoke of Deceit Orb-walking</li>
+                <li>Fixed autocast orbs triggering attack multiple times on manual casts</li>
+                <li>Fixed BackStab (Rikimaru) not counting break and bug with permanent damage</li>
+                <li>Fixed Psi Blades (Lanaya) counting spell damage amplification</li>
+                <li>Fixed rare bug with Weave (Dazzle) leading to permanent armor</li>
+                <li>Fixed old bug, towers de-agro on creeps, triggers with 2.5 second cooldown</li>
+                <li>Added -jp (Just Pick. No Bans on All Pick) additional mode for All Pick, can be enabled with combination -apjp</li>
+                <li>Added FF counter</li>
+                <li>Fixed old bug with Ball Lightning could be used while rolling without reaching cast point</li>
+                <li>Fixed items disassembling when on cooldown to avoid abuse of quick sell</li>
+                <li>Fixed blinking ouside of map traveling to center of map</li>
+                <li>Fixed damage block calcualtion on Bulwark (Mars)</li>
+            </ul>
+        </article>
+        <article class="changelog-section" data-changelog-section>
+            <h3><span>🌐</span> Global</h3>
+            <ul class="changelog-list">
+                <li>Added Spell Resistance toggler to test unit puppet (-p)</li>
+                <li>Added -tip &lt;player slot&gt; command to give a respect</li>
+                <li>Added -minimap &lt;type&gt; command to change minimap option, 1 default one and 2 good one, affects "GoodMiniMap" config option</li>
+                <li>Ported new heroes Hoodwink and Mars from 7.07a4 patch, available only for donaters who purchased access to them</li>
+                <li>Acid Spray (Alchemist) spell mechanics and effect</li>
+                <li>Recoded Mana Breaks, now all sources stacks with each other (Diffusal Anti-Mage as well)</li>
+                <li>Recoded some Forced Movements</li>
+                <li>Recoded turn rates</li>
+                <li>Techies now allowed in -RD mode</li>
+                <li>Rubick now can steal Fire Remnant</li>
+                <li>Courier "Find Secret Shop" now send courier to closest secret shop</li>
+                <li>-maxfps, -aoe, -ws commands now saves its option in config file as well</li>
+                <li>Killing Roshan now provides Experience to the killing team instead nearest heroes</li>
+                <li>Updated banning system in -ap mode. VIP ban chance reduced from 100% to 70%</li>
+                <li>Updated Healing Ward and Omnislash (Juggernaut) spell mechanics</li>
+                <li>Blink teleport distance no longer reduced when targeted beyond the distance</li>
+                <li>Blade Mail return no longer affects spell immune</li>
+                <li>Now units stunned instead pause on the game end</li>
+                <li>Now towers and creeps aggro on Orb attacks in 500 range</li>
+            </ul>
+        </article>
+        <article class="changelog-section" data-changelog-section>
+            <h3><span>🏹</span> Hoodwink</h3>
+            <div class="changelog-note" style="margin:0 0 12px">Differences from 7.07a4 patch:</div>
+            <ul class="changelog-list">
+                <li>LVL 20 Right talent provides only vision without true sight</li>
+                <li>Acorn Shot has fixed 1000 cast range and not scale with attack range</li>
+                <li>Aghanim's Scepter doesn't provide Decoy ability (to keep hero balanced in this patch)</li>
+                <li>Sharpshooter break debuff cannot be purged</li>
+                <li>Hero can't give attack orders while casting Sharpshooter</li>
+                <li>Bushwhack doesn't provide vision to the affected targets and affected targets loses full vision</li>
+                <li>Boomerang applies -25% magic resist instead incoming spell damage due to not having this modificator</li>
+                <li>Scurry active doubles evasion bonus instead attack &amp; cast range bonuses</li>
+            </ul>
+            <div class="changelog-note"><strong>Updated Hand of Midas — Transmute</strong></div>
+            <ul class="changelog-list">
+                <li>Now has 2 charges that have a 100-second replenish time</li>
+                <li>Now has 1 charge upon acquiring the item</li>
+                <li>Now cooldown reductions affects instantly on this item instead after casting</li>
+            </ul>
+        </article>
+        <article class="changelog-section" data-changelog-section>
+            <h3><span>✨</span> Visuals</h3>
+            <ul class="changelog-list">
+                <li>Ported all sets/skins from latest version</li>
+                <li>Added Black Hole (Enigma) sound effect</li>
+                <li>Added new terrain model changer command '-terra 0-6' has 6 options to set. Care before using default theme cannot be reverted till next game</li>
+                <li>Added Custom Light (-light 6)</li>
+                <li>Added Sentry Ward markers</li>
+                <li>Added Shadowraze new cast animations</li>
+                <li>Corrected unattached to the model textures</li>
+                <li>Updated -light command and added light option in config file</li>
+                <li>Killed neutrals no longer counted in creep killed stats</li>
+            </ul>
+        </article>
+        <article class="changelog-section" data-changelog-section>
+            <h3><span>🔄</span> Updates</h3>
+            <ul class="changelog-list">
+                <li>Alchemist aghanim's scepter granting visual and text</li>
+                <li>Showing heroes on -sd mode</li>
+                <li>Game end animations</li>
+                <li>Effects visibilities in fog</li>
+                <li>Roshan minimap icon</li>
+                <li>Torrent (Admiral) effects</li>
+                <li>Pounce animation</li>
+                <li>New Year theme visuals</li>
+                <li>Scourge side tower models</li>
+                <li>Tower range markers, now enemy markers has red color</li>
+                <li>Item bought announce, added Hand of Midas and Radiance</li>
+                <li>Hungry Chest courier model to no sound one</li>
+                <li>Courier killed info</li>
+                <li>Progress Bars on teleports effect</li>
+            </ul>
+            <div class="changelog-note"><strong>The next heroes models were updated:</strong></div>
+            <ul class="changelog-list">
+                <li>Slark</li><li>Balanar</li><li>Lifestealer</li>
+                <li>Ogre Magi (including E3. Battle Ogre Magi)</li>
+                <li>Rikimaru (including E3. Elite Assassin)</li>
+                <li>Lina (including E2. Lina the Highest)</li>
+                <li>Centaur Warchief (including E2. Emerald Centaur)</li>
+                <li>E1. Pudge the Scarecrow portrait</li>
+                <li>E1. Ice Magnataur</li>
+            </ul>
+        </article>
+    </div>
+    <div class="changelog-empty" id="changelogEmpty">No matching changelog entries found.</div>
+    <p class="changelog-note">This page displays the changelog text supplied for <strong>v6.90a8–v6.90b2</strong>.</p>
+</section>
 <!-- FAQ POPUP MODAL -->
-<div aria-hidden="true" aria-modal="true" class="faq-modal" id="faqModal" role="dialog">
+<div aria-hidden="true" aria-modal="true" class="faq-modal notranslate" id="faqModal" role="dialog">
 <div class="faq-modal-dialog" role="document">
 <button aria-label="Close" class="faq-modal-close" id="faqModalClose" type="button">
                 ×
@@ -1722,6 +1932,109 @@ body.modal-open {
 </div>
 </div>
 <script>
+/* Google Translate is scoped to the map changelog; the Help Desk remains in English. */
+function googleTranslateElementInit() {
+    if (window.google && google.translate && google.translate.TranslateElement) {
+        new google.translate.TranslateElement({
+            pageLanguage: 'en',
+            includedLanguages: 'en,es,th,zh-CN',
+            autoDisplay: false
+        }, 'googleTranslateMount');
+    }
+}
+
+const changelogLanguage = document.getElementById('changelogLanguage');
+let translatePollCount = 0;
+
+/* Clear Google Translate's saved language and reload the original English DOM.
+   Keep the user on the Map Changelogs subpage after the reload. */
+function clearGoogleTranslateState() {
+    const expired = 'expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/';
+    document.cookie = 'googtrans=; ' + expired;
+
+    const hostParts = window.location.hostname.split('.');
+    for (let i = 0; i < hostParts.length - 1; i++) {
+        const domain = hostParts.slice(i).join('.');
+        document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; domain=' + domain;
+    }
+}
+
+function applyChangelogLanguage(language) {
+    if (language === 'en') {
+        sessionStorage.setItem('restoreChangelogAfterEnglish', '1');
+        clearGoogleTranslateState();
+        window.location.reload();
+        return;
+    }
+
+    const combo = document.querySelector('.goog-te-combo');
+    if (combo) {
+        translatePollCount = 0;
+        combo.value = language;
+        combo.dispatchEvent(new Event('change', { bubbles: true }));
+    } else if (translatePollCount++ < 40) {
+        setTimeout(() => applyChangelogLanguage(language), 250);
+    }
+}
+changelogLanguage.addEventListener('change', () => applyChangelogLanguage(changelogLanguage.value));
+
+/* =========================
+   SUBPAGE NAVIGATION + CHANGELOG SEARCH
+========================= */
+const pageNavButtons = document.querySelectorAll(".page-nav-btn");
+const faqPageElements = [
+    document.querySelector(".search-box"),
+    document.querySelector(".categories"),
+    document.querySelector(".section-title"),
+    document.getElementById("faqGrid"),
+    document.getElementById("noResults"),
+    document.querySelector(".contact-box")
+];
+const changelogPage = document.getElementById("changelogPage");
+
+pageNavButtons.forEach(button => {
+    button.addEventListener("click", () => {
+        const page = button.dataset.page;
+        pageNavButtons.forEach(item => item.classList.toggle("active", item === button));
+        const showFaq = page === "faq";
+        faqPageElements.forEach(element => {
+            if (element) element.style.display = showFaq ? "" : "none";
+        });
+        changelogPage.style.display = showFaq ? "none" : "block";
+        if (!showFaq && faqModal.classList.contains("show")) closeFaqModal();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+});
+
+const changelogSearch = document.getElementById("changelogSearch");
+const changelogSections = document.querySelectorAll("[data-changelog-section]");
+const changelogEmpty = document.getElementById("changelogEmpty");
+const changelogCount = document.getElementById("changelogCount");
+
+changelogSearch.addEventListener("input", () => {
+    const query = changelogSearch.value.toLowerCase().trim();
+    let visibleSections = 0;
+    let visibleEntries = 0;
+    changelogSections.forEach(section => {
+        let sectionHasMatch = false;
+        section.querySelectorAll(".changelog-list li").forEach(entry => {
+            const match = !query || entry.textContent.toLowerCase().includes(query);
+            entry.style.display = match ? "" : "none";
+            if (match) { sectionHasMatch = true; visibleEntries++; }
+        });
+        const headingMatch = section.querySelector("h3").textContent.toLowerCase().includes(query);
+        if (headingMatch && query) {
+            section.querySelectorAll(".changelog-list li").forEach(entry => {
+                entry.style.display = "";
+            });
+            sectionHasMatch = true;
+        }
+        section.style.display = sectionHasMatch ? "" : "none";
+        if (sectionHasMatch) visibleSections++;
+    });
+    changelogEmpty.style.display = visibleSections ? "none" : "block";
+    changelogCount.textContent = `${visibleSections} sections · ${visibleEntries} matching entries`;
+});
 
 /* =========================
    FAQ POPUP OPEN / CLOSE
@@ -2029,6 +2342,13 @@ document.querySelectorAll('.faq-card').forEach(function(card) {
         card.style.removeProperty('--mouse-y');
     });
 });
+/* Restore the Map Changelogs subpage after resetting Google Translate to English. */
+if (sessionStorage.getItem('restoreChangelogAfterEnglish') === '1') {
+    sessionStorage.removeItem('restoreChangelogAfterEnglish');
+    const changelogNavButton = document.querySelector('.page-nav-btn[data-page="changelog"]');
+    if (changelogNavButton) changelogNavButton.click();
+}
 </script>
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" async></script>
 </body>
 </html>
