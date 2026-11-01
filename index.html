@@ -1629,18 +1629,48 @@ body{min-height:100vh}
   }
  }
 
+ function clearGoogleTranslateCookie(){
+  document.cookie="googtrans=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; SameSite=Lax";
+  const hostParts=window.location.hostname.split(".");
+  for(let i=0;i<hostParts.length-1;i++){
+   const domain=hostParts.slice(i).join(".");
+   document.cookie="googtrans=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; domain="+domain+"; SameSite=Lax";
+  }
+ }
+ function restoreGoogleOriginalLanguage(combo){
+  // Restore the original DOM through the TranslateElement instance when available.
+  const translator=window.rgcGoogleTranslator;
+  if(translator){
+   for(const key of Object.keys(translator)){
+    const part=translator[key];
+    if(part&&typeof part.restore==="function"){
+     try{part.restore();clearGoogleTranslateCookie();return true;}catch(e){}
+    }
+   }
+  }
+  // Fallback: select the widget's empty/original option twice.
+  if(combo){
+   combo.value="";
+   combo.dispatchEvent(new Event("change",{bubbles:true}));
+   setTimeout(()=>{
+    const current=document.querySelector(".goog-te-combo");
+    if(current){current.value="";current.dispatchEvent(new Event("change",{bubbles:true}));}
+    clearGoogleTranslateCookie();
+   },120);
+   return true;
+  }
+  return false;
+ }
  function setGoogleTranslateLanguage(language){
-  // Every navigation/change supersedes older pending attempts. This prevents
-  // a delayed FAQ request from overriding the Changelogs language (or vice versa).
+  // Supersede older pending language requests during page navigation.
   const request=++translateRequest;
   let attempts=0;
   const apply=()=>{
    if(request!==translateRequest)return;
    const combo=document.querySelector(".goog-te-combo");
    if(combo){
-    // The empty option is Google's source/original-language setting (English).
-    combo.value=language==="en"?"":language;
-    combo.dispatchEvent(new Event("change",{bubbles:true}));
+    if(language==="en")restoreGoogleOriginalLanguage(combo);
+    else{combo.value=language;combo.dispatchEvent(new Event("change",{bubbles:true}));}
     return;
    }
    if(attempts++<80)setTimeout(apply,250);
@@ -1713,7 +1743,7 @@ body{min-height:100vh}
 /* Same Google Translate initialization strategy used by the Help Desk. */
 function googleTranslateElementInit(){
  if(window.google&&google.translate&&google.translate.TranslateElement){
-  new google.translate.TranslateElement({
+  window.rgcGoogleTranslator = new google.translate.TranslateElement({
    pageLanguage:"en",
    includedLanguages:"es,th,zh-CN,ar",
    autoDisplay:false
